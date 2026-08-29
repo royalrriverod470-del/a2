@@ -64,7 +64,7 @@
         </div>
 
         <div style="position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-silver); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
-          <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=15" alt="WinterCoatJet Luxury Winter Down Parka" style="width: 100%; height: 500px; object-fit: cover;">
+          <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=800&q=80" alt="WinterCoatJet Luxury Winter Down Parka" style="width: 100%; height: 500px; object-fit: cover;">
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem; background: linear-gradient(0deg, rgba(11,19,37,0.95) 0%, transparent 100%);">
             <span style="font-size: 0.75rem; color: var(--accent-ice); font-weight: 800; text-transform: uppercase;">Flagship Alpine Outerwear</span>
             <h3 style="color: var(--text-frost); font-size: 1.3rem;">Arctic Expedition 800-Fill Goose Down Parka</h3>
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div>
-          <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=16" alt="WinterCoatJet Outerwear Tailoring Workshop" style="border-radius: 20px; border: 1px solid var(--border-silver);">
+          <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80" alt="WinterCoatJet Outerwear Tailoring Workshop" style="border-radius: 20px; border: 1px solid var(--border-silver);">
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
         <!-- Coat 1 -->
         <div class="coat-card">
           <div class="coat-img-wrap">
-            <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=17" alt="Arctic Expedition Down Parka">
+            <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=800&q=80" alt="Arctic Expedition Down Parka">
           </div>
           <div class="coat-body">
             <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">800-Fill Goose Down • -30°C Rating</span>
@@ -130,7 +130,7 @@
         <!-- Coat 2 -->
         <div class="coat-card">
           <div class="coat-img-wrap">
-            <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=18" alt="Savile Row Wool Overcoat">
+            <img src="https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=800&q=80" alt="Savile Row Wool Overcoat">
           </div>
           <div class="coat-body">
             <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">100% Cashmere-Wool Blend • Double-Breasted</span>
@@ -148,7 +148,7 @@
         <!-- Coat 3 -->
         <div class="coat-card">
           <div class="coat-img-wrap">
-            <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=19" alt="Nanotech Travel Trench Coat">
+            <img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?auto=format&fit=crop&w=800&q=80" alt="Nanotech Travel Trench Coat">
           </div>
           <div class="coat-body">
             <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">20,000mm Nanotech Membrane • Packable</span>
@@ -207,13 +207,13 @@
 
       <div class="alpine-gallery">
         <div class="gallery-tile">
-          <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=20" alt="St. Moritz Alpine Ski Resort Outerwear">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80" alt="St. Moritz Alpine Ski Resort Outerwear">
         </div>
         <div class="gallery-tile">
-          <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=21" alt="Paris Winter Fashion Runway Show">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80" alt="Paris Winter Fashion Runway Show">
         </div>
         <div class="gallery-tile">
-          <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=22" alt="First Class Jet Lounge Winter Outerwear">
+          <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=800&q=80" alt="First Class Jet Lounge Winter Outerwear">
         </div>
       </div>
     </div>
@@ -281,7 +281,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
         <div class="blog-card">
           <div class="blog-img-wrap">
-            <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=23" alt="800-Fill Goose Down Insulation">
+            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" alt="800-Fill Goose Down Insulation">
           </div>
           <div class="blog-body">
             <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">August 24, 2026 • 1,394 Words</span>
@@ -293,7 +293,7 @@
 
         <div class="blog-card">
           <div class="blog-img-wrap">
-            <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=24" alt="20,000mm Nanotech Storm Shells">
+            <img src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?auto=format&fit=crop&w=800&q=80" alt="20,000mm Nanotech Storm Shells">
           </div>
           <div class="blog-body">
             <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">August 20, 2026 • 1,396 Words</span>
@@ -305,7 +305,7 @@
 
         <div class="blog-card">
           <div class="blog-img-wrap">
-            <img src="https://images.unsplash.com/photo-1548123378-bde4eca81d2d?auto=format&fit=crop&w=800&q=80&wcj_slot=25" alt="Savile Row Double-Breasted Wool Overcoats">
+            <img src="https://images.unsplash.com/photo-1546961329-78bef0414d7c?auto=format&fit=crop&w=800&q=80" alt="Savile Row Double-Breasted Wool Overcoats">
           </div>
           <div class="blog-body">
             <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">August 16, 2026 • 1,395 Words</span>
